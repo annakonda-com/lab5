@@ -34,6 +34,14 @@ public:
         return std::sqrt(x * x + y * y + z * z);
     }
 
+    double GetX() {
+        return this->x;
+    }
+
+    double GetY() {
+        return this->y;
+    }
+
     Vector3D Normalize() const {
         double len = Length();
         if (len < 1e-9) {

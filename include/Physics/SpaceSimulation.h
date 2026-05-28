@@ -7,7 +7,7 @@
 class SpaceSimulation {
 private:
     Spacecraft* playerCraft;
-    Sequence<CelestialBody*>* celestialBodies; // Полиморфный АТД-контейнер для источников гравитации
+    Sequence<CelestialBody*>* celestialBodies;
 
 public:
     SpaceSimulation(Spacecraft* craft, Sequence<CelestialBody*>* bodiesContainer)
@@ -30,38 +30,47 @@ public:
     Spacecraft* GetSpacecraft() const { return playerCraft; }
     const Sequence<CelestialBody*>* GetCelestialBodies() const { return celestialBodies; }
 
-    // Физический шаг симуляции (вычисление гравитации через Map-Reduce)
     void Tick(double deltaTime, Sequence<Vector3D>* forceVectorStorage) {
         if (deltaTime <= 0.0) {
             throw std::invalid_argument("Simulation Error: Timestep (dt) must be strictly positive.");
         }
 
-        Vector3D craftPos = playerCraft->GetPosition();
-        double craftMass = playerCraft->GetMass();
-
-        // 1. ЭТАП MAP: Рассчитываем силу гравитационного влияния от каждого тела независимо
-        auto mapGravity = [craftPos, craftMass](CelestialBody* body) -> Vector3D {
-            return body->CalculateGravityForce(craftPos, craftMass);
-        };
-        MapReduceEngine::Map(celestialBodies, forceVectorStorage, mapGravity);
-
-        // 2. ЭТАП REDUCE: Суммируем векторы всех сил в один результирующий вектор
         auto reduceSum = [](const Vector3D& accum, const Vector3D& force) -> Vector3D {
             return accum + force;
         };
-        Vector3D totalGravityForce = MapReduceEngine::Reduce(forceVectorStorage, reduceSum, Vector3D(0, 0, 0));
 
-        // 3. Обновляем состояние космического корабля (сила тяги посчитается внутри UpdateState)
-        playerCraft->UpdateState(deltaTime, totalGravityForce);
+        while (forceVectorStorage->GetLength() > 0) forceVectorStorage->RemoveAt(0);
 
-        // 4. Обновляем состояние нестатичных тел окружения
+        Vector3D craftPos = playerCraft->GetPosition();
+        double craftMass = playerCraft->GetMass();
+
+        auto mapCraftGravity = [craftPos, craftMass](CelestialBody* body) -> Vector3D {
+            return body->CalculateGravityForce(craftPos, craftMass);
+        };
+
+        MapReduceEngine::Map(celestialBodies, forceVectorStorage, mapCraftGravity);
+        Vector3D totalCraftGravity = MapReduceEngine::Reduce(forceVectorStorage, reduceSum, Vector3D(0, 0, 0));
+        playerCraft->UpdateState(deltaTime, totalCraftGravity);
+
         for (int i = 0; i < celestialBodies->GetLength(); ++i) {
-            CelestialBody* body = celestialBodies->Get(i);
-            // Нестатичные тела движутся по своим траекториям/инерции
-            body->UpdateState(deltaTime, Vector3D(0, 0, 0));
+            CelestialBody* currentBody = celestialBodies->Get(i);
+            if (currentBody->IsStatic()) continue;
+            while (forceVectorStorage->GetLength() > 0) forceVectorStorage->RemoveAt(0);
+
+            Vector3D bodyPos = currentBody->GetPosition();
+            double bodyMass = currentBody->GetMass();
+
+            auto mapBodyGravity = [currentBody, bodyPos, bodyMass](CelestialBody* otherBody) -> Vector3D {
+                if (currentBody == otherBody) return Vector3D(0, 0, 0);
+                return otherBody->CalculateGravityForce(bodyPos, bodyMass);
+            };
+
+            MapReduceEngine::Map(celestialBodies, forceVectorStorage, mapBodyGravity);
+            Vector3D totalBodyForce = MapReduceEngine::Reduce(forceVectorStorage, reduceSum, Vector3D(0, 0, 0));
+
+            currentBody->UpdateState(deltaTime, totalBodyForce);
         }
 
-        // Очищаем временное хранилище векторов сил через интерфейс Sequence, чтобы не раздувать память
         while (forceVectorStorage->GetLength() > 0) {
             forceVectorStorage->RemoveAt(0);
         }

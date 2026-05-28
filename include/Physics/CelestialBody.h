@@ -9,14 +9,13 @@ public:
     CelestialBody(const Vector3D& pos, const Vector3D& vel, double m, bool isStat, double gConst = 6.67430e-11)
         : SpaceObject(pos, vel, m, isStat), gravityConstant(gConst) {}
 
-    void UpdateState(double deltaTime, const Vector3D& totalForce) override {
-        if (isStatic) {
-            return;
-        }
+    void UpdateState(double deltaTime, const Vector3D& totalForce) {
+        if (isStatic) return;
 
         Vector3D acceleration = totalForce / mass;
-        velocity = velocity + acceleration * deltaTime;
+        velocity = velocity + acceleration * (0.5 * deltaTime);
         position = position + velocity * deltaTime;
+        velocity = velocity + acceleration * (0.5 * deltaTime);
     }
 
     Vector3D CalculateGravityForce(const Vector3D& targetPosition, double targetMass) const override {
