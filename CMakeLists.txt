@@ -42,6 +42,9 @@ add_executable(lab5
         include/Physics/SpaceSimulation.h
         include/Physics/MapReduceEngine.h
         ui/SpaceGameUI.h
+        include/Physics/AstronomySimulation.h
+        ui/SimulationViewer.h
+        include/Common/Observation.h
 )
 
 target_include_directories(lab5 PUBLIC
