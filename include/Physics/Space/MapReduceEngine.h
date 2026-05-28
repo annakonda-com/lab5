@@ -1,5 +1,5 @@
 #pragma once
-#include "../Sequences/Sequence.h"
+#include "../../Sequences/Sequence.h"
 
 class MapReduceEngine {
 public:

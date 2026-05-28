@@ -1,16 +1,15 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
 #include <iostream>
 #include <string>
 #include <iomanip>
 #include <sstream>
 #include <cmath>
 
-#include "../Physics/SpaceSimulation.h"
+#include "../include/Physics/Space/SpaceSimulation.h"
 #include "../Sequences/ListSequence.h"
 
-class SpaceGameUI {
+class SymulationSpaceGame {
 private:
     SpaceSimulation& simulation;
     sf::RenderWindow window;
@@ -22,7 +21,7 @@ private:
     float shipAngle;
 
 public:
-    SpaceGameUI(SpaceSimulation& sim)
+    SymulationSpaceGame(SpaceSimulation& sim)
         : simulation(sim),
           window(sf::VideoMode({1200, 800}), "Space Sandbox Pro (SFML 3.0)"),
           scale(0.05),

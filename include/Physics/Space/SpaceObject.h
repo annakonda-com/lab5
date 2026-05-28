@@ -1,5 +1,5 @@
 #pragma once
-#include "../Common/Vector3D.h"
+#include "../../Common/Vector3D.h"
 
 class SpaceObject {
 protected:

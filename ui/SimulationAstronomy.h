@@ -7,9 +7,9 @@
 #include "../include/Common/Vector3D.h"
 #include "../Sequences/ListSequence.h"
 #include "Observation.h"
-#include "Physics/AstronomySimulation.h"
+#include "../include/Physics/Space/AstronomySimulation.h"
 
-class SimulationViewer {
+class SimulationAstronomy {
 private:
     sf::RenderWindow window;
     AstronomySimulation sim;
@@ -42,7 +42,7 @@ private:
     }
 
 public:
-    SimulationViewer()
+    SimulationAstronomy()
         : window(sf::VideoMode({1200,800}), "3D Reconstruction"),
     text(font)
     {
@@ -61,7 +61,7 @@ public:
         text.setFillColor(sf::Color::White);
     }
 
-    ~SimulationViewer() {
+    ~SimulationAstronomy() {
         delete observations;
         delete points;
         delete screenPoints;

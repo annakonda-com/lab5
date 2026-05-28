@@ -1,8 +1,8 @@
 #pragma once
-#include "../Sequences/Sequence.h"
+#include "../../Sequences/Sequence.h"
 #include "CelestialBody.h"
 #include "Spacecraft.h"
-#include "../Physics/MapReduceEngine.h"
+#include "MapReduceEngine.h"
 
 class SpaceSimulation {
 private:

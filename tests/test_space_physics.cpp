@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
-#include "../include/Physics/MapReduceEngine.h"
-#include "../include/Physics/Spacecraft.h"
-#include "../include/Physics/CelestialBody.h"
-#include "../include/Physics/SpaceSimulation.h"
+#include "../include/Physics/Space/MapReduceEngine.h"
+#include "../include/Physics/Space/Spacecraft.h"
+#include "../include/Physics/Space/CelestialBody.h"
+#include "../include/Physics/Space/SpaceSimulation.h"
 #include "../include/Sequences/ListSequence.h"
 
 

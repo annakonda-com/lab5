@@ -36,15 +36,17 @@ add_executable(lab5
         include/Sequences/SequenceEnumerator.h
         include/Sequences/SequenceFunctions.h
         include/Common/Vector3D.h
-        include/Physics/SpaceObject.h
-        include/Physics/CelestialBody.h
-        include/Physics/Spacecraft.h
-        include/Physics/SpaceSimulation.h
-        include/Physics/MapReduceEngine.h
-        ui/SpaceGameUI.h
-        include/Physics/AstronomySimulation.h
-        ui/SimulationViewer.h
+        include/Physics/Space/SpaceObject.h
+        include/Physics/Space/CelestialBody.h
+        include/Physics/Space/Spacecraft.h
+        include/Physics/Space/SpaceSimulation.h
+        include/Physics/Space/MapReduceEngine.h
+        ui/SymulationSpaceGame.h
+        include/Physics/Space/AstronomySimulation.h
+        ui/SimulationAstronomy.h
         include/Common/Observation.h
+        include/Physics/MassSpringSystem.h
+        ui/SimulationMassSpring.h
 )
 
 target_include_directories(lab5 PUBLIC

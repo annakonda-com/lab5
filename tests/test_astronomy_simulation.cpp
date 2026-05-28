@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include "Physics/AstronomySimulation.h"
+#include "../include/Physics/Space/AstronomySimulation.h"
 
 class AstronomySimulationTest : public ::testing::Test {
 protected:

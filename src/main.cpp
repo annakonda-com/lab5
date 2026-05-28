@@ -1,12 +1,13 @@
-#include "include/Physics/Spacecraft.h"
-#include "include/Physics/CelestialBody.h"
-#include "include/Physics/SpaceSimulation.h"
+#include "../include/Physics/Space/Spacecraft.h"
+#include "../include/Physics/Space/CelestialBody.h"
+#include "../include/Physics/Space/SpaceSimulation.h"
 #include "include/Sequences/ListSequence.h"
-#include "ui/SimulationViewer.h"
-#include "ui/SpaceGameUI.h"
+#include "ui/SimulationAstronomy.h"
+#include "ui/SimulationMassSpring.h"
+#include "ui/SymulationSpaceGame.h"
 
 int main() {
-    std::cout << "Choose mode:\n1 - Spacecraft\n2 - Astronomy\n";
+    std::cout << "Choose mode:\n1 - Spacecraft\n2 - Astronomy\n3 - Mass Spring System\n";
     int mode;
     std::cin >> mode;
     if (mode == 1) {
@@ -22,15 +23,35 @@ int main() {
 
         SpaceSimulation simulation(player, bodiesContainer);
 
-        SpaceGameUI ui(simulation);
+        SymulationSpaceGame ui(simulation);
         ui.Run();
         delete player;
         delete bodiesContainer;
         return 0;
-    } else if (mode == 2) {
-        SimulationViewer viewer;
+    }
+    if (mode == 2) {
+        SimulationAstronomy viewer;
         viewer.Run();
         return 0;
+    }
+    if (mode == 3) {
+        MassSpringSystem system(0.016);
+
+        system.AddParticle({-50,-50,0},1,true);
+        system.AddParticle({50,-50,0},1,true);
+        system.AddParticle({50,50,0},1);
+        system.AddParticle({-50,50,0},1);
+
+        system.AddSpring(0,1,5,0.1);
+        system.AddSpring(1,2,5,0.1);
+        system.AddSpring(2,3,5,0.1);
+        system.AddSpring(3,0,5,0.1);
+
+        system.AddSpring(0,2,5,0.1);
+        system.AddSpring(1,3,5,0.1);
+
+        SimulationMassSpring sim(system);
+        sim.run();
     } else {
         std::cout << "No such mode\n";
     }
