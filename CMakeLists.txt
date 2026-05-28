@@ -70,6 +70,7 @@ add_executable(tests
         tests/test_sequence.cpp
         tests/test_space_physics.cpp
         "tests/test_astronomy_simulation.cpp"
+        tests/test_mass_spring_simulation.cpp
 )
 
 target_include_directories(tests PRIVATE ${CMAKE_SOURCE_DIR}/include)
