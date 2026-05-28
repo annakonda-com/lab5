@@ -1,5 +1,5 @@
 #pragma once
-#include "Particle.h"
+#include "../include/Common/Particle.h"
 #include "../Common/Vector3D.h"
 #include "../Sequences/ListSequence.h"
 
