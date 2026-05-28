@@ -63,6 +63,7 @@ add_executable(tests
         tests/test_dynamic_array.cpp
         tests/test_linked_list.cpp
         tests/test_sequence.cpp
+        tests/test_space_physics.cpp
 )
 
 target_include_directories(tests PRIVATE ${CMAKE_SOURCE_DIR}/include)
@@ -70,11 +71,16 @@ target_link_libraries(tests gtest gtest_main)
 
 add_test(NAME Lab5Tests COMMAND tests)
 
-if(WIN32)
-    add_custom_command(TARGET lab5 POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_RUNTIME_DLLS:lab5>
-            $<TARGET_FILE_DIR:lab5>
-            COMMAND_EXPAND_LISTS
-    )
-endif()
+function(setup_windows_runtime_dlls target_name)
+    if(WIN32)
+        add_custom_command(TARGET ${target_name} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                $<TARGET_RUNTIME_DLLS:${target_name}>
+                $<TARGET_FILE_DIR:${target_name}>
+                COMMAND_EXPAND_LISTS
+        )
+    endif()
+endfunction()
+
+setup_windows_runtime_dlls(lab5)
+setup_windows_runtime_dlls(tests)
