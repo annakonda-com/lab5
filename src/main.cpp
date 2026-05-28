@@ -8,8 +8,8 @@
 #include "ui/SimulationSpaceGame.h"
 
 int main() {
-    std::cout << "Choose mode:\n1 - Spacecraft\n2 - Astronomy\n3 - Mass Spring System\n"
-                 "4 - Brownian Motion\n";
+    std::cout << "Choose mode:\n1 - Spacecraft (task 1)\n2 - Astronomy (task 2)\n3 - Mass Spring System (task 7)\n"
+                 "4 - Brownian Motion (task 10)\n";
     int mode;
     std::cin >> mode;
     if (mode == 1) {
