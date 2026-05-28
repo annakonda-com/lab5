@@ -63,4 +63,8 @@ public:
         }
         return *this / len;
     }
+
+    double Dot(const Vector3D& other) const {
+        return x * other.x + y * other.y + z * other.z;
+    }
 };

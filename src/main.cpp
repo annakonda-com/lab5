@@ -3,11 +3,13 @@
 #include "../include/Physics/Space/SpaceSimulation.h"
 #include "include/Sequences/ListSequence.h"
 #include "ui/SimulationAstronomy.h"
+#include "ui/SimulationBrownianMotion.h"
 #include "ui/SimulationMassSpring.h"
-#include "ui/SymulationSpaceGame.h"
+#include "ui/SimulationSpaceGame.h"
 
 int main() {
-    std::cout << "Choose mode:\n1 - Spacecraft\n2 - Astronomy\n3 - Mass Spring System\n";
+    std::cout << "Choose mode:\n1 - Spacecraft\n2 - Astronomy\n3 - Mass Spring System\n"
+                 "4 - Brownian Motion\n";
     int mode;
     std::cin >> mode;
     if (mode == 1) {
@@ -23,7 +25,7 @@ int main() {
 
         SpaceSimulation simulation(player, bodiesContainer);
 
-        SymulationSpaceGame ui(simulation);
+        SimulationSpaceGame ui(simulation);
         ui.Run();
         delete player;
         delete bodiesContainer;
@@ -52,6 +54,10 @@ int main() {
 
         SimulationMassSpring sim(system);
         sim.run();
+    } if (mode == 4) {
+        SimulationBrownianMotion sim(800.0, 600.0, 400.0, 0.01, 0.5);
+        sim.Run();
+        return 0;
     } else {
         std::cout << "No such mode\n";
     }

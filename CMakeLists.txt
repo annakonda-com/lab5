@@ -41,12 +41,16 @@ add_executable(lab5
         include/Physics/Space/Spacecraft.h
         include/Physics/Space/SpaceSimulation.h
         include/Physics/Space/MapReduceEngine.h
-        ui/SymulationSpaceGame.h
+        ui/SimulationSpaceGame.h
         include/Physics/Space/AstronomySimulation.h
         ui/SimulationAstronomy.h
         include/Common/Observation.h
         include/Physics/MassSpringSystem.h
         ui/SimulationMassSpring.h
+        include/Common/Particle.h
+        include/Common/RandomGenerator.h
+        include/Physics/BrownianMotion.h
+        ui/SimulationBrownianMotion.h
 )
 
 target_include_directories(lab5 PUBLIC

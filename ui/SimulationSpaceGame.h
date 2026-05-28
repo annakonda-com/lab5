@@ -9,7 +9,7 @@
 #include "../include/Physics/Space/SpaceSimulation.h"
 #include "../Sequences/ListSequence.h"
 
-class SymulationSpaceGame {
+class SimulationSpaceGame {
 private:
     SpaceSimulation& simulation;
     sf::RenderWindow window;
@@ -21,7 +21,7 @@ private:
     float shipAngle;
 
 public:
-    SymulationSpaceGame(SpaceSimulation& sim)
+    SimulationSpaceGame(SpaceSimulation& sim)
         : simulation(sim),
           window(sf::VideoMode({1200, 800}), "Space Sandbox Pro (SFML 3.0)"),
           scale(0.05),
